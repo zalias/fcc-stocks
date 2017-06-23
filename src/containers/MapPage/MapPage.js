@@ -14,14 +14,27 @@ export default class MapPage extends Component {
     chartConfig: PropTypes.object,
     loadStock: PropTypes.func.isRequired
   }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const input = this.refs.stockName;
+    this.props.loadStock(input.value);
+    input.value = '';
+  }
   render() {
-    const {chartConfig, loadStock} = this.props; // eslint-disable-line no-shadow
+    const {chartConfig} = this.props; // eslint-disable-line no-shadow
     return (
       <div className="container">
         <h1>Map Page</h1>
         <Helmet title="Map Page"/>
         <ReactHighstock config={chartConfig} />
-        <button className="btn btn-primary" onClick={loadStock}>Reload from server</button>
+        <form className="login-form form-inline" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <input type="text" ref="stockName" placeholder="Enter a username" className="form-control"/>
+            </div>
+            <button className="btn btn-success" onClick={this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Submit Ticker
+            </button>
+          </form>
       </div>
     );
   }

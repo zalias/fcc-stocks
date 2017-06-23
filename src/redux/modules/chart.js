@@ -53,9 +53,13 @@ export function isLoaded(globalState) {
   return globalState.chart && globalState.chart.loaded;
 }
 
-export function loadStock() {
+export function loadStock(name) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/loadStockData')
+    promise: (client) => client.post('/loadStockData', {
+      data: {
+        name: name
+      }
+    })
   };
 }
