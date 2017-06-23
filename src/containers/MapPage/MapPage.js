@@ -1,59 +1,27 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {loadStock} from 'redux/modules/chart';
 import Helmet from 'react-helmet';
 import ReactHighstock from 'react-highcharts/ReactHighstock';
 
-export default class StockPage extends Component {
+@connect(
+  state => ({chartConfig: state.chart.config}),
+  dispatch => bindActionCreators({loadStock}, dispatch))
 
-  state = {
-    showKitten: false,
-    configs: {
-      rangeSelector: {
-        selected: 1
-
-      },
-      title: {
-        text: 'Stocks'
-
-      },
-      tooltip: {
-        style: {
-          width: '500px'
-
-        },
-        valueDecimals: 4,
-        shared: true
-
-      },
-      yAxis: {
-        title: {
-          text: ''
-
-        }
-
-      },
-      series: [{
-        name: 'USD to EUR',
-        data: [[1220832000000, 22.56], [1220918400000, 21.67], [1221004800000, 21.66], [1221091200000, 21.81], [1221177600000, 21.28], [1221436800000, 20.05], [1221523200000, 19.98], [1221609600000, 18.26], [1221696000000, 19.16]],
-        id: 'dataseries'
-
-      }, {
-        name: 'EUR to EUR',
-        data: [[1220832000000, 22.56], [1220918400000, 21.67]],
-        id: 'dataseries1'
-
-      }]
-
-    }
+export default class MapPage extends Component {
+  static propTypes = {
+    chartConfig: PropTypes.object,
+    loadStock: PropTypes.func.isRequired
   }
-
-  handleToggleKitten = () => this.setState({showKitten: !this.state.showKitten});
-
   render() {
+    const {chartConfig, loadStock} = this.props; // eslint-disable-line no-shadow
     return (
       <div className="container">
         <h1>Map Page</h1>
         <Helmet title="Map Page"/>
-        <ReactHighstock config={this.state.configs} />
+        <ReactHighstock config={chartConfig} />
+        <button className="btn btn-primary" onClick={loadStock}>Reload from server</button>
       </div>
     );
   }
