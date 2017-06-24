@@ -77,7 +77,9 @@ if (config.apiPort) {
         }
       }
     });
-
+    socket.on('stockAdded', (data) => {
+      socket.emit('stockAdded', data);
+    });
     socket.on('msg', (data) => {
       data.id = messageIndex;
       messageBuffer[messageIndex % bufferSize] = data;

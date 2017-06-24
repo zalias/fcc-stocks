@@ -8,7 +8,7 @@ export default function loadStockData(req) {
     .then(result =>{
       const stockTable = result.data.datatable.data;
 
-      if (stockTable.length === 0) return Promise.reject('NOT_FOUND');
+      if (stockTable.length === 0) return Promise.reject('Couldn\'t find ' + stockName);
 
       const data = stockTable.map((dataPoint) => {
         dataPoint.shift();
@@ -21,7 +21,6 @@ export default function loadStockData(req) {
         data,
         color: '#' + Math.floor(Math.random() * 16777215).toString(16)
       };
-
       return Promise.resolve(answer);
     })
     .catch(error => { console.error(error); return Promise.reject(error); });

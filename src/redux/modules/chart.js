@@ -32,10 +32,14 @@ export default function chart(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
+      socket.emit('stockAdded', {
+        message: action.result.name
+      });
       return {
         ...state,
         loading: false,
         loaded: true,
+        error: '',
         config: { ...state.config,
           series: [...state.config.series, action.result]
         }
@@ -55,7 +59,6 @@ export default function chart(state = initialState, action = {}) {
     case DELETE_STOCK_SUCCESS:
       // delete the stock from state.config.series
       const stockToDelete = action.result;
-      console.log(action.result);
       const newSeries = [...state.config.series].filter((object) => {
         return object.name !== stockToDelete;
       });
