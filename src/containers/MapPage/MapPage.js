@@ -20,9 +20,9 @@ export default class MapPage extends Component {
     event.preventDefault();
     const input = this.refs.stockName;
     const duplicate = this.props.chartConfig.series.filter((object) => {
-      return object.name === input.value;
+      return object.name === input.value.toUpperCase();
     });
-    if (duplicate.length === 0) this.props.loadStock(input.value);
+    if (duplicate.length === 0) this.props.loadStock(input.value.toUpperCase());
     input.value = '';
   }
   render() {

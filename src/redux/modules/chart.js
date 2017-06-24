@@ -11,7 +11,7 @@ const initialState = {
       selected: 1
     },
     title: {
-      text: 'Stocks'
+      text: 'Stock Prices for 2015'
     },
     tooltip: {
       style: {
